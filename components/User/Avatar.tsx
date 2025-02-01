@@ -1,52 +1,73 @@
-import React from "react";
+"use client";
+import {
+  Avatar as AV,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
+import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
 
 function Avatar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
+
   return (
-    <div>
+    <div className="relative" ref={dropdownRef}>
       <div className="hidden md:relative md:block">
         <button
-          type="button"
-          className="overflow-hidden rounded-full border border-gray-300 shadow-inner"
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center space-x-2"
         >
-          <span className="sr-only">Toggle dashboard menu</span>
-
-          <img
-            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt=""
-            className="size-10 object-cover"
-          />
+          <AV>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </AV>
         </button>
-
+      </div>
+      {isOpen && (
         <div
-          className="absolute end-0 z-10 mt-0.5 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
+          className="absolute right-0 z-10 mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
           role="menu"
         >
           <div className="p-2">
-            <a
+            <Link
               href="#"
               className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
               role="menuitem"
             >
               My profile
-            </a>
-
-            <a
+            </Link>
+            <Link
               href="#"
               className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
               role="menuitem"
             >
               Billing summary
-            </a>
-
-            <a
+            </Link>
+            <Link
               href="#"
               className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
               role="menuitem"
             >
               Team settings
-            </a>
+            </Link>
           </div>
-
           <div className="p-2">
             <form method="POST" action="#">
               <button
@@ -60,7 +81,7 @@ function Avatar() {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-4"
+                  className="h-4 w-4"
                 >
                   <path
                     strokeLinecap="round"
@@ -73,7 +94,7 @@ function Avatar() {
             </form>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

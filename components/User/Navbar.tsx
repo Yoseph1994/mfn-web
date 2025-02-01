@@ -5,7 +5,7 @@ import Logo from "@/components/User/Logo";
 import DeskTopNav from "@/components/User/DeskTopNav";
 
 function Navbar() {
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   return (
     <div className="bg-white shadow-lg sticky top-0 z-50 w-full">

@@ -2,15 +2,9 @@
 import { NavLinks } from "@/constants/NavLinks";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
 function DeskTopNav() {
-  const [currentPath, setCurrentPath] = useState("");
   const pathname = usePathname();
-
-  useEffect(() => {
-    setCurrentPath(pathname);
-  }, [pathname]);
 
   return (
     <ul className="flex items-center gap-6 text-sm">
@@ -27,9 +21,7 @@ function DeskTopNav() {
                   <Link href={child.path}>
                     <span
                       className={`block px-4 py-2 text-sm text-gray-700 hover:opacity-75 cursor-pointer ${
-                        currentPath === child.path
-                          ? "bg-blue-500 text-white"
-                          : ""
+                        pathname === child.path ? "bg-blue-500 text-white" : ""
                       }`}
                     >
                       {child.name}
@@ -44,8 +36,8 @@ function DeskTopNav() {
             <Link href={link.path}>
               <span
                 className={`text-gray-500 transition hover:opacity-75 cursor-pointer ${
-                  currentPath === link.path ||
-                  (link.name === "Home" && currentPath === "/")
+                  pathname === link.path ||
+                  (link.name === "Home" && pathname === "/")
                     ? "bg-blue-500 text-white py-2 px-4 rounded-md"
                     : ""
                 }`}

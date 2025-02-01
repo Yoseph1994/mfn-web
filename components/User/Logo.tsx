@@ -1,9 +1,10 @@
+import Link from "next/link";
 import React from "react";
 
 function Logo() {
   return (
     <div>
-      <a className="block text-teal-600" href="#">
+      <Link className="block text-blue-600" href="/">
         <span className="sr-only">Home</span>
         <svg
           className="h-8"
@@ -16,7 +17,7 @@ function Logo() {
             fill="currentColor"
           />
         </svg>
-      </a>
+      </Link>
     </div>
   );
 }
